@@ -2,16 +2,12 @@ package net.southplus.southplusmaid;
 
 import atlantafx.base.theme.PrimerDark;
 import cn.tealc995.teaFX.stage.RoundStage;
-import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.MvvmFX;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import net.southplus.southplusmaid.config.Config;
 import net.southplus.southplusmaid.factory.UIFactory;
@@ -19,9 +15,6 @@ import net.southplus.southplusmaid.model.MessageInfo;
 import net.southplus.southplusmaid.model.MessageType;
 import net.southplus.southplusmaid.ui.MainUI;
 import net.southplus.southplusmaid.ui.MainViewModel;
-import net.southplus.southplusmaid.ui.VoiceListUI;
-import net.southplus.southplusmaid.ui.VoiceListViewModel;
-import net.southplus.southplusmaid.ui.control.LocalWebView;
 import net.southplus.southplusmaid.util.FXResourcesLoader;
 
 import java.io.IOException;
@@ -62,9 +55,6 @@ public class Main extends Application {
 
 
     public static void exit(){
-        if (Config.BROWSER_TYPE){
-            LocalWebView.saveCookies();
-        }
         Config.saveSetting();
         Platform.exit();
     }

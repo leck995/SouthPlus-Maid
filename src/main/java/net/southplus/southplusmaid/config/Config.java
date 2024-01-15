@@ -66,6 +66,7 @@ public class Config {
             NET_DISKS.add(new NetDisk("度盘","度盘","百度","bd"));
             NET_DISKS.add(new NetDisk("夸克","夸克"));
             NET_DISKS.add(new NetDisk("OneDrive","OneDrive","od"));
+            NET_DISKS.add(new NetDisk("Pikpak","Pikpak"));
         }
 
     }

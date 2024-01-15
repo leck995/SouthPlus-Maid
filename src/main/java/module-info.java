@@ -15,7 +15,6 @@
      opens net.southplus.southplusmaid to javafx.fxml;
      opens net.southplus.southplusmaid.ui to javafx.fxml,de.saxsys.mvvmfx;
      opens net.southplus.southplusmaid.model.dlsite to com.fasterxml.jackson.databind;
-     exports net.southplus.southplusmaid.ui.control to com.fasterxml.jackson.databind;
      exports net.southplus.southplusmaid.model to com.fasterxml.jackson.databind;
      exports net.southplus.southplusmaid;
      exports net.southplus.southplusmaid.model.dlsite;
