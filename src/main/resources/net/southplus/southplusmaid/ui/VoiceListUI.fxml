@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.ModalPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane stylesheets="@../css/Voice_List.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.southplus.southplusmaid.ui.VoiceListUI">
+   <children>
+      <AnchorPane prefHeight="800.0" prefWidth="1200.0">
+         <children>
+            <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <AnchorPane>
+                     <children>
+                        <ScrollPane fx:id="ItemScrollPane" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="itemFlowPane" hgap="10.0" vgap="10.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+               <left>
+                  <ListView fx:id="titleListVIew" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <HBox alignment="CENTER" spacing="20.0">
+                           <children>
+                              <Pagination fx:id="pagination" pageCount="100" prefHeight="60.0" prefWidth="500.0">
+                                 <padding>
+                                    <Insets bottom="15.0" />
+                                 </padding>
+                              </Pagination>
+                              <TextField fx:id="pageTextField" promptText="跳转（ENTER）" />
+                           </children>
+                        </HBox>
+                     </center>
+                     <right>
+                        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                           <children>
+                              <ToggleButton fx:id="changItemViewBtn" mnemonicParsing="false" text="模式" />
+                           </children>
+                           <BorderPane.margin>
+                              <Insets right="20.0" />
+                           </BorderPane.margin>
+                        </HBox>
+                     </right>
+                     <left>
+                        <Pane prefHeight="60.0" prefWidth="200.0" styleClass="bottom-left" BorderPane.alignment="CENTER" />
+                     </left>
+                  </BorderPane>
+               </bottom>
+            </BorderPane>
+            <ModalPane fx:id="modalPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <StackPane fx:id="dialogPane" styleClass="dialog-pane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" maxHeight="150.0" maxWidth="250.0" prefHeight="150.0" prefWidth="250.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="dialogLabel" text="加载中，请稍后">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <ProgressBar fx:id="dialogProgress" prefWidth="200.0" progress="0.0" />
+                        <Button fx:id="refreshBtn" mnemonicParsing="false" text="刷新" />
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
