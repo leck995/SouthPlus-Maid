@@ -120,21 +120,21 @@ public class BbsRowService extends Service<BbsInfo> {
             return Jsoup
                     .connect(Config.SOUTH_PLUS_HOST +"/"+fUrl)
                     .header("Cookie",Config.COOKIE)
-                    .header("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0")
+                    .header("User-Agent",Config.USER_AGENT)
                     .proxy(Config.PROXY_HOST, Config.PROXY_PORT)
-                    .timeout(3000)
+                    .timeout(5000)
                     .get();
         }catch (SocketTimeoutException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛请求超时，请检查网络并刷新"));
+            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛请求超时:"+e.getMessage()));
             return null;
         }catch (HttpStatusException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常，请检查网络并刷新"));
+            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
             return null;
         } catch (IllegalArgumentException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常，请检查网络并刷新"));
+            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
             return null;
         } catch (Exception e) {
             System.err.println("Jsoup："+e);

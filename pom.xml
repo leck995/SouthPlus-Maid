@@ -6,7 +6,7 @@
 
     <groupId>net.south-plus</groupId>
     <artifactId>SouthPlusMaid</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <name>SouthPlusMaid</name>
 
     <properties>

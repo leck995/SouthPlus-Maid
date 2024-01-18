@@ -18,6 +18,7 @@ public class Config {
     public static Integer HEIGHT=1000;
     public static String SOUTH_PLUS_HOST;
     public static String COOKIE;
+    public static String USER_AGENT;
     public static Boolean PROXY=true;
     public static String PROXY_HOST="127.0.0.1";
     public static Integer PROXY_PORT=7890;
@@ -44,6 +45,7 @@ public class Config {
                 HEIGHT=jsonNode.get("HEIGHT").asInt();
                 SOUTH_PLUS_HOST= jsonNode.get("SOUTH_PLUS_HOST").asText();
                 COOKIE=  jsonNode.get("COOKIE").asText();
+                USER_AGENT=jsonNode.get("USER_AGENT").asText();
                 PROXY=jsonNode.get("PROXY").asBoolean();
                 PROXY_HOST=jsonNode.get("PROXY_HOST").asText();
                 PROXY_PORT= jsonNode.get("PROXY_PORT").asInt();
@@ -78,6 +80,7 @@ public class Config {
         map.put("HEIGHT",HEIGHT);
         map.put("SOUTH_PLUS_HOST",SOUTH_PLUS_HOST);
         map.put("COOKIE",COOKIE);
+        map.put("USER_AGENT",USER_AGENT);
         map.put("PROXY",PROXY);
         map.put("PROXY_HOST",PROXY_HOST);
         map.put("PROXY_PORT",PROXY_PORT);

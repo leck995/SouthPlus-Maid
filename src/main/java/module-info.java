@@ -18,4 +18,4 @@
      exports net.southplus.southplusmaid.model to com.fasterxml.jackson.databind;
      exports net.southplus.southplusmaid;
      exports net.southplus.southplusmaid.model.dlsite;
-}
+ }

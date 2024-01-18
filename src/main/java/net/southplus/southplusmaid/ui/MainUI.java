@@ -27,6 +27,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import net.southplus.southplusmaid.Main;
+import net.southplus.southplusmaid.config.Config;
 import net.southplus.southplusmaid.factory.UIFactory;
 import net.southplus.southplusmaid.model.MessageInfo;
 import net.southplus.southplusmaid.model.MessageType;
@@ -47,9 +48,6 @@ public class MainUI implements FxmlView<MainViewModel>, Initializable {
     private AnchorPane root;
     @FXML
     private VBox messagePane;
-
-
-
     private TitleBar titleBar;
 
     @Override
@@ -59,24 +57,21 @@ public class MainUI implements FxmlView<MainViewModel>, Initializable {
             viewModel.exit();
         });
 
-      /*  Button settingBtn = new Button();
-        settingBtn.setGraphic(new Region());
-        settingBtn.getStyleClass().add("setting-btn");
-        settingBtn.setOnAction(action -> {
-         *//*   Pane item = null;
-            try {
-                item = FXMLLoader.load(FXResourcesLoader.loadURL(FxmlPaths.SETTING));
-                AlertFactory.showDefault(0, item, this);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }*//*
-        });
-        titleBar.getTitleBarRightPane().getChildren().add(0, settingBtn);*/
 
         titleBar.setTitle("South+ Maid");
         titleBar.setTitleIcon(new ImageView(new Image(FXResourcesLoader.load("/net/southplus/southplusmaid/image/icon.png"),37,37,true,true,true)));
+
+        if (Config.COOKIE==null){
+
+        }
+
+
+
         ViewTuple<VoiceListUI, VoiceListViewModel> viewTuple = UIFactory.VoiceListUI();
         titleBar.setContent(viewTuple.getView());
+
+
+
         root.getChildren().add(0,titleBar);
         AnchorPaneUtil.setPosition(titleBar,0.0,0.0,0.0,0.0);
 
@@ -84,7 +79,6 @@ public class MainUI implements FxmlView<MainViewModel>, Initializable {
 
        // messagePane.setMouseTransparent(true);
         MvvmFX.getNotificationCenter().subscribe("message",((s, objects) -> {
-            System.out.println("获得message");
             MessageInfo info= (MessageInfo) objects[0];
             Message message = createMessage(info);
             message.setOnClose(e -> {

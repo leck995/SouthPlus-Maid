@@ -29,10 +29,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         if (Config.PROXY){
-            System.setProperty("https.proxyHost","127.0.0.1");
-            System.setProperty("https.proxyPort","7890");
-            System.setProperty("https.proxyHost","127.0.0.1");
-            System.setProperty("https.proxyPort","7890");
+            System.setProperty("https.proxyHost",Config.PROXY_HOST);
+            System.setProperty("https.proxyPort", String.valueOf(Config.PROXY_PORT));
+            System.setProperty("https.proxyHost",Config.PROXY_HOST);
+            System.setProperty("https.proxyPort",String.valueOf(Config.PROXY_PORT));
         }
         stage=new RoundStage();
         ViewTuple<MainUI, MainViewModel> viewTuple = UIFactory.MainUI();
@@ -65,6 +65,10 @@ public class Main extends Application {
        if (Config.COOKIE==null || Config.COOKIE.isEmpty()){
            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.WARNING,"请先在配置文件中设置论坛Cookie"));
        }
+        if (Config.USER_AGENT==null || Config.USER_AGENT.isEmpty()){
+            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.WARNING,"请先在配置文件中设置浏览器User-Agent"));
+        }
+
         if (Config.SOUTH_PLUS_HOST==null || Config.SOUTH_PLUS_HOST.isEmpty()){
             MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.WARNING,"请先在配置文件中设置论坛网址"));
         }
