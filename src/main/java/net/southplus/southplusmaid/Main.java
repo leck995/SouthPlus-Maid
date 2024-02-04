@@ -4,20 +4,27 @@ import atlantafx.base.theme.PrimerDark;
 import cn.tealc995.teaFX.stage.RoundStage;
 import de.saxsys.mvvmfx.MvvmFX;
 import de.saxsys.mvvmfx.ViewTuple;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.southplus.southplusmaid.config.Config;
 import net.southplus.southplusmaid.factory.UIFactory;
 import net.southplus.southplusmaid.model.MessageInfo;
 import net.southplus.southplusmaid.model.MessageType;
+import net.southplus.southplusmaid.service.BbsTaskService;
 import net.southplus.southplusmaid.ui.MainUI;
 import net.southplus.southplusmaid.ui.MainViewModel;
 import net.southplus.southplusmaid.util.FXResourcesLoader;
 
 import java.io.IOException;
+import java.util.Timer;
 
 public class Main extends Application {
     public static RoundStage stage;
@@ -49,6 +56,9 @@ public class Main extends Application {
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         checkSetting();
 
+        startTask();
+
+
 
     }
 
@@ -59,6 +69,22 @@ public class Main extends Application {
         Platform.exit();
     }
 
+    /**
+     * @description: 领取任务，默认5s以后开始执行
+     * @name: startTask
+     * @author: Leck
+     * @param:
+     * @return  void
+     * @date:   2024/2/4
+     */
+    public void startTask(){
+        Timeline timeline=new Timeline(new KeyFrame(Duration.seconds(5),new KeyValue(new SimpleIntegerProperty(),5)));
+        timeline.setOnFinished(actionEvent -> {
+            BbsTaskService service=new BbsTaskService();
+            service.run();
+        });
+        timeline.play();
+    }
 
 
     public void checkSetting(){
