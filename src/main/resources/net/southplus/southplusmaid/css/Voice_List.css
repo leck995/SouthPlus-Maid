@@ -139,6 +139,13 @@
     -fx-alignment: center;
     -fx-text-fill: #CCEDEA;
 }
+.list-item-tag-type{
+    -fx-padding: 5 8 5 8;
+    -fx-background-color: #2bb63b;
+    -fx-background-radius: 4;
+    -fx-alignment: center;
+    -fx-text-fill: #CCEDEA;
+}
 .list-item-date{
     -fx-text-fill: #CC0000;
 }

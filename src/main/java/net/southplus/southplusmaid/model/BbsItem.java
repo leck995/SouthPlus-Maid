@@ -1,5 +1,6 @@
 package net.southplus.southplusmaid.model;
 
+import net.southplus.southplusmaid.config.Config;
 import net.southplus.southplusmaid.model.dlsite.DLSiteWork;
 
 public class BbsItem {
@@ -9,6 +10,15 @@ public class BbsItem {
     private DLSiteWork work;
     private String url;
 
+    private String type; //获取类型，简体，繁体，翻译，AI等等
+
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getRjId() {
         return rjId;

@@ -28,6 +28,13 @@ public class DLSiteThread extends Task<DLSiteWork> {
     @Override
     protected DLSiteWork call() throws Exception {
         DLSiteWork dlSiteWork = getDLSiteWork(rjId);
+        String lowerCase = dlSiteWork.getWork_name().toLowerCase();
+        for (String key : Config.BBS_ITEM_TYPE.keySet()) {
+            if (lowerCase.contains(key.toLowerCase())){
+                dlSiteWork.setType(Config.BBS_ITEM_TYPE.get(key));
+                break;
+            }
+        }
         Thread.sleep(300);
         return dlSiteWork;
     }

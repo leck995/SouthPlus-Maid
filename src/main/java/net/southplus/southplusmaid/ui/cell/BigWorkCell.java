@@ -93,6 +93,16 @@ public class BigWorkCell extends WorkCell {
         setPrefWidth(Config.BBS_ITEM_BIG_WIDTH);
         getStyleClass().add("list-item-pane");
 
+        Label typeLabel= new Label();
+        typeLabel.getStyleClass().add("list-item-tag-type");
+        tagPane.getChildren().add(typeLabel);
+        if (item.getType() != null){
+            typeLabel.setText(item.getType());
+        }else {
+            typeLabel.setVisible(false);
+        }
+
+
         if (work == null){
             itemAlbum.setImage(BASE_IMAGE);
             itemTitle.setText(item.getTitle());
@@ -114,6 +124,17 @@ public class BigWorkCell extends WorkCell {
                 mouseEvent.consume();
             });
             dateLabel.setText(work.getRegist_date());
+
+
+
+
+
+             if (!typeLabel.isVisible() && work.getType() != null){
+                typeLabel.setText(item.getType());
+                typeLabel.setVisible(true);
+            }
+
+
 
 
             Label nsfwLabel= new Label(work.getAge_category());

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Config {
     private static final String SETTING_FILE="setting.json";
@@ -32,6 +33,7 @@ public class Config {
 
     public static List<NetDisk> NET_DISKS=new ArrayList<>(); //不区分大小写
 
+    public static LinkedHashMap<String,String> BBS_ITEM_TYPE;
 
 
 
@@ -60,18 +62,50 @@ public class Config {
                     NetDisk netDisk = mapper.treeToValue(node, NetDisk.class);
                     NET_DISKS.add(netDisk);
                 }
+                JsonNode bbsItemType = jsonNode.get("BBS_ITEM_TYPE");
+                BBS_ITEM_TYPE = mapper.convertValue(bbsItemType, new TypeReference<LinkedHashMap<String, String>>() {});
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
+
+            if (BBS_ITEM_TYPE == null){
+                initType();
+            }
+
+            if (NET_DISKS.isEmpty()){
+                initDisk();
+            }
         }else {
-            NET_DISKS.add(new NetDisk("度盘","度盘","百度","bd"));
-            NET_DISKS.add(new NetDisk("夸克","夸克"));
-            NET_DISKS.add(new NetDisk("OneDrive","OneDrive","od"));
-            NET_DISKS.add(new NetDisk("Pikpak","Pikpak"));
+            initType();
+            initDisk();
+
         }
 
     }
+
+
+    public static void initType(){
+        BBS_ITEM_TYPE=new LinkedHashMap<>();
+        BBS_ITEM_TYPE.put("简体","简体");
+        BBS_ITEM_TYPE.put("簡体","简体");
+        BBS_ITEM_TYPE.put("繁体","繁体");
+        BBS_ITEM_TYPE.put("繁體","繁体");
+        BBS_ITEM_TYPE.put("AI","AI");
+        BBS_ITEM_TYPE.put("机翻","机翻");
+        BBS_ITEM_TYPE.put("汉化","汉化");
+        BBS_ITEM_TYPE.put("翻译","汉化");
+    }
+
+    public static void initDisk(){
+        NET_DISKS.add(new NetDisk("度盘","度盘","百度","bd"));
+        NET_DISKS.add(new NetDisk("夸克","夸克"));
+        NET_DISKS.add(new NetDisk("OneDrive","OneDrive","od"));
+        NET_DISKS.add(new NetDisk("Pikpak","Pikpak"));
+    }
+
+
+
 
 
     public static void saveSetting(){
@@ -90,7 +124,7 @@ public class Config {
         map.put("BBS_ITEM_BIG_WIDTH",BBS_ITEM_BIG_WIDTH);
         map.put("BROWSER_TYPE",BROWSER_TYPE);
         map.put("NET_DISKS",NET_DISKS);
-
+        map.put("BBS_ITEM_TYPE",BBS_ITEM_TYPE);
         ObjectMapper mapper=new ObjectMapper();
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(SETTING_FILE),map);

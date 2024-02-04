@@ -78,7 +78,7 @@ public class Main extends Application {
      * @date:   2024/2/4
      */
     public void startTask(){
-        Timeline timeline=new Timeline(new KeyFrame(Duration.seconds(5),new KeyValue(new SimpleIntegerProperty(),5)));
+        Timeline timeline=new Timeline(new KeyFrame(Duration.seconds(10),new KeyValue(new SimpleIntegerProperty(),10)));
         timeline.setOnFinished(actionEvent -> {
             BbsTaskService service=new BbsTaskService();
             service.run();

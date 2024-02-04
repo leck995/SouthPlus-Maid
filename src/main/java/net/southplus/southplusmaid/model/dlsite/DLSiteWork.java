@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import net.southplus.southplusmaid.config.Config;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,16 @@ public class DLSiteWork {
     private String age_category_string;
     private String regist_date;
 
+    private String type;
 
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     /**
      * @description: 判断年龄

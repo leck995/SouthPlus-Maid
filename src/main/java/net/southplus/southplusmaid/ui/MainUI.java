@@ -86,10 +86,10 @@ public class MainUI implements FxmlView<MainViewModel>, Initializable {
                 out.setOnFinished(f -> messagePane.getChildren().remove(message));
                 out.playFromStart();
             });
-            Platform.runLater(() -> messagePane.getChildren().add(message));
-
+            Platform.runLater(() -> {
+                messagePane.getChildren().add(message);
+            });
             Animations.slideInRight(message, Duration.millis(250)).playFromStart();
-
             Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -99,6 +99,7 @@ public class MainUI implements FxmlView<MainViewModel>, Initializable {
                 }
             }));
             fiveSecondsWonder.play();
+
         }));
 
 

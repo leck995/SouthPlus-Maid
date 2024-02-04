@@ -180,6 +180,16 @@ public class BbsRowService extends Service<BbsInfo> {
             String rj = RJUtils.getRj(text);
             item=new BbsItem();
             item.setTitle(text);
+
+            String lowerCase = text.toLowerCase();
+            for (String key : Config.BBS_ITEM_TYPE.keySet()) {
+                if (lowerCase.contains(key.toLowerCase())){
+                    item.setType(Config.BBS_ITEM_TYPE.get(key));
+                    break;
+                }
+            }
+
+
             if (rj != null){
                 item.setRjId(rj);
             }
