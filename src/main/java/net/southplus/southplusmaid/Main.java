@@ -52,16 +52,10 @@ public class Main extends Application {
         stage.getIcons().add(new Image(FXResourcesLoader.load("/net/southplus/southplusmaid/image/icon.png")));
         stage.show();
 
-
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         checkSetting();
 
-        startTask();
-
-
-
     }
-
 
 
     public static void exit(){
@@ -69,22 +63,6 @@ public class Main extends Application {
         Platform.exit();
     }
 
-    /**
-     * @description: 领取任务，默认5s以后开始执行
-     * @name: startTask
-     * @author: Leck
-     * @param:
-     * @return  void
-     * @date:   2024/2/4
-     */
-    public void startTask(){
-        Timeline timeline=new Timeline(new KeyFrame(Duration.seconds(10),new KeyValue(new SimpleIntegerProperty(),10)));
-        timeline.setOnFinished(actionEvent -> {
-            BbsTaskService service=new BbsTaskService();
-            service.run();
-        });
-        timeline.play();
-    }
 
 
     public void checkSetting(){

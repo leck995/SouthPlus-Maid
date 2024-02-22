@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.saxsys.mvvmfx.MvvmFX;
+import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.input.DataFormat;
@@ -32,36 +33,45 @@ import java.util.List;
  * @author: Leck
  * @date:   2024/2/3
  */
-public class BbsTaskService extends Task<Boolean> {
+public class BbsTaskService extends ScheduledService<Boolean> {
     public static final String TITLE="plugin.php?H_name-tasks.html";//默认任务栏目url
     private static final String ACCEPT_TASK="plugin.php?H_name=tasks&action=ajax&actions=job&cid=";//默认领取任务栏目url，结尾任务id
     private static final String FINISH_TASK="plugin.php?H_name=tasks&action=ajax&actions=job2&cid=";//默认完成任务栏目url，结尾任务id
-
     @Override
-    protected Boolean call() throws Exception {
-        Document document = getDocument();
-        if (document != null){
-            List<BbsTask> tasks = getTasks(document);
-            List<BbsTask> list = tasks.stream().filter(BbsTask::ready).toList();
-            if (!list.isEmpty()){
-                MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.INFO,list.size()+"个任务可领取，开始执行"));
-                for (BbsTask task : list) {
-                    boolean b = acceptTask(task);
-                    if (b){
-                        MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.SUCCESS,task.getTitle()+"成功领取，获取SP:"+task.getSp()));
+    protected Task<Boolean> createTask() {
+        return new Task<Boolean>() {
+            @Override
+            protected Boolean call() throws Exception {
+                Document document = getDocument();
+                if (document != null){
+                    List<BbsTask> tasks = getTasks(document);
+                    List<BbsTask> list = tasks.stream().filter(BbsTask::ready).toList();
+                    if (!list.isEmpty()){
+                         MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.INFO,list.size()+"个任务可领取，开始执行"));
+                        //updateMessage(list.size()+"个任务可领取，开始执行");
+                        for (BbsTask task : list) {
+                            boolean b = acceptTask(task);
+                            if (b){
+                                MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.SUCCESS,task.getTitle()+"成功领取，获取SP:"+task.getSp()));
+                                //updateMessage(task.getTitle()+"成功领取，获取SP:"+task.getSp());
+                            }else {
+                                MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,task.getTitle()+"领取失败"));
+                                //updateMessage(task.getTitle()+"领取失败");
+                            }
+                        }
                     }else {
-                        MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,task.getTitle()+"领取失败"));
+                         MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.INFO,"当前无可领取任务"));
+                        //updateMessage("当前无可领取任务");
                     }
+                }else {
+                    System.err.println("未获取到html");
+                    updateMessage("访问任务列表失败");
                 }
-            }else {
-                MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.INFO,"当前无可领取任务"));
+                cancel();
+                return true;
             }
-        }else {
-            System.err.println("未获取到html");
-        }
-        return true;
+        };
     }
-
 
 
     private Document getDocument(){
@@ -75,15 +85,15 @@ public class BbsTaskService extends Task<Boolean> {
                     .get();
         }catch (SocketTimeoutException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛请求超时:"+e.getMessage()));
+           // MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛请求超时:"+e.getMessage()));
             return null;
         }catch (HttpStatusException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
+            //MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
             return null;
         } catch (IllegalArgumentException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
+            //MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
             return null;
         } catch (Exception e) {
             System.err.println("Jsoup："+e);
@@ -170,22 +180,21 @@ public class BbsTaskService extends Task<Boolean> {
             String body2 = response2.body();
             System.out.println("完成结果："+body2);
 
-            return body2.contains("请赶紧去完成任务吧");
+            return body2.contains("已经完成");
         }catch (SocketTimeoutException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛请求超时:"+e.getMessage()));
             return false;
         }catch (HttpStatusException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
             return false;
         } catch (IllegalArgumentException e){
             System.err.println(e.getMessage());
-            MvvmFX.getNotificationCenter().publish("message",new MessageInfo(MessageType.ERROR,"论坛访问异常:"+e.getMessage()));
             return false;
         } catch (Exception e) {
             System.err.println("Jsoup："+e);
             throw new RuntimeException(e);
         }
     }
+
+
 }
