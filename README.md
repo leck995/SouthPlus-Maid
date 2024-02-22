@@ -16,6 +16,7 @@ South-Plus Maid是一个小工具，主要适用于某N+网站的音声区，实
   "HEIGHT" : "1000",
   "SOUTH_PLUS_HOST" : "https://www.xxxxx-xxxx.net",
   "COOKIE" : "N+用户Cookie，使用前必须填写,两侧双引号不可少",
+  "USER_AGENT" "浏览器UA，使用前必须填写,两侧双引号不可少":
   "PROXY" : true,
   "PROXY_HOST" : "127.0.0.1",
   "PROXY_PORT" : 7890,
@@ -45,6 +46,7 @@ South-Plus Maid是一个小工具，主要适用于某N+网站的音声区，实
 | HEIGHT | 窗口高度 |  
 | SOUTH_PLUS_HOST | N+网址，使用前必须填写,两侧双引号不可少 |  
 | COOKIE | N+用户Cookie，使用前必须填写,两侧双引号不可少 |  
+| USER_AGENT | 获取登录COOKIE的浏览器的USER_AGENT| 
 | PROXY | 开启代理，true开启，false关闭 |  
 | PROXY_HOST | 代理网址 |  
 | PROXY_PORT | 代理端口 |  
